@@ -26,6 +26,10 @@ test_set = subset(dataset, split == FALSE)
 regressor = lm(formula = Profit ~ .,
                data = training_set)
 
+# Predicting the test set results
+
+y_pred = predict(regressor, newdata = test_set)
+
 
 
 
