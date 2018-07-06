@@ -35,6 +35,7 @@ ggplot() +
 
 
 # Visualising the Regression Model results (for higher resolution and smoother curve)
+library(ggplot2)
 x_grid = seq(min(dataset$Level), max(dataset$Level), 0.1)
 ggplot() + 
   geom_point(aes(x= dataset$Level, y = dataset$Salary),
