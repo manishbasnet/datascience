@@ -1,8 +1,10 @@
-# Classification Template
-
+# Naive Bayes
 # Importing the dataset
 dataset = read.csv('Social_Network_Ads.csv')
 dataset = dataset[, 3:5]
+
+# Encoding the target feature as factor 
+dataset$Purchased = factor(dataset$Purchased, levels = c(0,1))
 
 # Splitting the dataset into the Training set and Test set
 # install.packages('caTools')
@@ -16,11 +18,14 @@ test_set = subset(dataset, split == FALSE)
 training_set[, 1:2] = scale(training_set[, 1:2])
 test_set[, 1:2] = scale(test_set[, 1:2])
 
-# Fitting classifier to the Training set
-# Create your classifier here
+# Fitting Naive Bayes to the Training set
+library(e1071)
+classifier = naiveBayes(x = training_set[-3],
+                        y = training_set$Purchased)
+
 
 # Predicting the test set results
-y_pred = predict(classifier,newdata = test_set[-3])
+y_pred = predict(classifier, newdata = test_set[-3])
 
 # Making the Confusion Matrix
 cm = table(test_set[, 3], y_pred)
@@ -32,9 +37,9 @@ X1 = seq(min(set[, 1]) - 1, max(set[, 1]) + 1, by = 0.01)
 X2 = seq(min(set[, 2]) - 1, max(set[, 2]) + 1, by = 0.01)
 grid_set = expand.grid(X1, X2)
 colnames(grid_set) = c('Age', 'EstimatedSalary')
-y_grid = predict(classifier, type = 'response', newdata = grid_set)
+y_grid = predict(classifier, newdata = grid_set)
 plot(set[, -3],
-     main = 'classifier (Training set)',
+     main = 'Naive Bayes (Training set)',
      xlab = 'Age', ylab = 'Estimated Salary',
      xlim = range(X1), ylim = range(X2))
 contour(X1, X2, matrix(as.numeric(y_grid), length(X1), length(X2)), add = TRUE)
@@ -48,9 +53,9 @@ X1 = seq(min(set[, 1]) - 1, max(set[, 1]) + 1, by = 0.01)
 X2 = seq(min(set[, 2]) - 1, max(set[, 2]) + 1, by = 0.01)
 grid_set = expand.grid(X1, X2)
 colnames(grid_set) = c('Age', 'EstimatedSalary')
-y_grid = predict(classifier, type = 'response', newdata = grid_set)
+y_grid = predict(classifier, newdata = grid_set)
 plot(set[, -3],
-     main = 'classifier (Test set)',
+     main = 'Naive Bayes (Test set)',
      xlab = 'Age', ylab = 'Estimated Salary',
      xlim = range(X1), ylim = range(X2))
 contour(X1, X2, matrix(as.numeric(y_grid), length(X1), length(X2)), add = TRUE)
