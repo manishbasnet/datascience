@@ -74,7 +74,7 @@ class RBM():
         self.a += torch.sum((ph0 - phk), 0)
 nv = len(training_set[0])
 nh = 100
-batch_size = 1682
+batch_size = 100
 rbm = RBM(nv, nh)
 
 # Training the RBM
